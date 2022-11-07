@@ -1,6 +1,8 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 import * as path from 'path';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
+
 // const modules = import.meta.glob('./src/components/**/*.js');
 
 // Advanced Base Options?
@@ -20,28 +22,46 @@ const multipleEntryPoints = [
   path.resolve(__dirname, 'src/components/HelloWorld/HelloWorld.vue'),
 ]
 
+const pageNames = [
+  'Button', 'HelloWorld'
+]
+
 export default defineConfig({
   root: path.resolve("."),
-  plugins: [vue()], 
+  plugins: [
+    vue(),
+    cssInjectedByJsPlugin(),
+  ], 
   build: {
     minify: true,
-    target: 'esnext',
+    target: 'es2019',
+    sourcemap: true,
+    // cssCodeSplit: false,
+    outDir: 'dist',
     lib: {
         // entry:  path.resolve(__dirname, 'src/main.ts'),
+        name: 'Ocean', 
         entry: multipleEntryPoints,
-        name: 'Ocean',
+        formats: ['es'],
         fileName: (format, entryName) => {
           return `pages/${entryName}/${entryName}.js`
         },
-    },
+      },
     rollupOptions: {
       preserveEntrySignatures: 'strict',
       external: ['vue'],
       output: {
+        // preserveModules: true, <--- TODO: research later
         globals: {
           vue: 'Vue'
+        },
+        entryFileNames: `pages/[name]/[name].js`,
+        chunkFileNames: `pages/[name]/[name].[hash].js`,
+        assetFileNames: (assetInfo) => {
+          console.log(assetInfo.source);
+          if (assetInfo.name === 'style.css') return `${pageNames[1]}/index.[hash].css`;
         }
       }
-    }
+    },
   }  
 })
