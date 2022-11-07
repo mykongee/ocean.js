@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     button {
         background-color: rgb(86, 83, 251);
     }

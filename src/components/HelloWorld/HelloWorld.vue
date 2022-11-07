@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Button from '../Button/Button.vue';
+import OceanButton from '../OceanButton/OceanButton.vue';
 
 defineProps<{ msg: string }>()
 
@@ -9,7 +9,7 @@ const count = ref(0);
 
 <template>
   <h1>{{ msg }}</h1>
-  <Button />
+  <OceanButton />
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
@@ -33,7 +33,16 @@ const count = ref(0);
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<style scoped>
+
+<style lang="scss">
+// Note: Using scoped here will override the OceanButton's button style rule
+// TODO: figure out why
+@import '../../style.scss';
+
+button {
+  background-color: $mainColor;
+}
+
 .read-the-docs {
   color: #888;
 }
