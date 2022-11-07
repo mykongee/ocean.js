@@ -18,6 +18,7 @@ export default {
 
 <style scoped lang="scss">
     button {
-        background-color: rgb(86, 83, 251);
+        color: white;
+        background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(118,125,241,1) 46%, rgba(172,255,192,1) 100%);
     }
 </style>

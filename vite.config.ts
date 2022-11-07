@@ -18,12 +18,12 @@ function getMultipleEntryFilePaths() {
 
 
 const multipleEntryPoints = [
-  path.resolve(__dirname, 'src/components/Button/Button.vue'),
+  path.resolve(__dirname, 'src/components/OceanButton/OceanButton.vue'),
   path.resolve(__dirname, 'src/components/HelloWorld/HelloWorld.vue'),
 ]
 
 const pageNames = [
-  'Button', 'HelloWorld'
+  'OceanButton', 'HelloWorld'
 ]
 
 export default defineConfig({
@@ -32,6 +32,9 @@ export default defineConfig({
     vue(),
     cssInjectedByJsPlugin(),
   ], 
+  css: {
+    devSourcemap: true,
+  },
   build: {
     minify: true,
     target: 'es2019',
@@ -58,7 +61,6 @@ export default defineConfig({
         entryFileNames: `pages/[name]/[name].js`,
         chunkFileNames: `pages/[name]/[name].[hash].js`,
         assetFileNames: (assetInfo) => {
-          console.log(assetInfo.source);
           if (assetInfo.name === 'style.css') return `${pageNames[1]}/index.[hash].css`;
         }
       }
